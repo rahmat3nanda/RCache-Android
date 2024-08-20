@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RCache"
 include(":app")
+include(":RCache")
