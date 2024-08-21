@@ -11,12 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import id.nesd.rcache.RCache
 import id.nesd.rcache.app.ui.theme.RCacheTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        RCache.common.save(true, RCache.Key("tes"))
         setContent {
             RCacheTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -33,7 +35,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Hello $name! ${RCache.common.readBool(RCache.Key("tes"))}",
         modifier = modifier
     )
 }
