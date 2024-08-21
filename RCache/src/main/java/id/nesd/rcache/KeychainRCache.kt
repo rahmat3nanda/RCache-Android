@@ -48,11 +48,11 @@ class KeychainRCache private constructor(context: Context) : RCaching {
     }
 
     override fun save(array: List<Any>, key: RCache.Key) {
-        sharedPreferences.edit().putString(generate(key), array.toRString())
+        sharedPreferences.edit().putString(generate(key), array.toRString()).apply()
     }
 
     override fun save(dictionary: Map<String, Any>, key: RCache.Key) {
-        sharedPreferences.edit().putString(generate(key), dictionary.toRString())
+        sharedPreferences.edit().putString(generate(key), dictionary.toRString()).apply()
     }
 
     override fun save(double: Double, key: RCache.Key) {
