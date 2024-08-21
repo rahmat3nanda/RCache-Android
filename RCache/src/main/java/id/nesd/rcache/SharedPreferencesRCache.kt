@@ -28,8 +28,8 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
         prefs.edit { putString(generate(key), data.joinToString(",") { it.toInt().toString() }) }
     }
 
-    override fun save(data: String, key: RCache.Key) {
-        prefs.edit { putString(generate(key), data) }
+    override fun save(string: String, key: RCache.Key) {
+        prefs.edit { putString(generate(key), string) }
     }
 
     override fun save(bool: Boolean, key: RCache.Key) {

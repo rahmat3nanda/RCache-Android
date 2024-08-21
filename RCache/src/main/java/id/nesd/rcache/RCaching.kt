@@ -32,14 +32,14 @@ interface RCaching {
     /**
      * Method for storing String with a defined key.
      *
-     * @param data String.
+     * @param string String.
      * @param key RCache.Key.
      * # Example #
      * ```
      * // RCaching.instance.save("data string", RCache.Key("string"))
      * ```
      */
-    fun save(data: String, key: RCache.Key)
+    fun save(string: String, key: RCache.Key)
 
     /**
      * Method for storing Boolean with a defined key.
