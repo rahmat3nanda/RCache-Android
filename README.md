@@ -81,6 +81,9 @@ RCache saves data to SharedPreferences and EncryptedSharedPreferences
 ```
 import id.nesd.rcache.RCache
 
+// initialize RCache
+RCache.initialize(this)
+
 // save/load SharedPreferences data
 RCache.common
 
