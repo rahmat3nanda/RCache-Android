@@ -8,7 +8,7 @@ android {
     namespace = "id.nesd.rcache"
     compileSdk = 34
 
-    version = "1.0.0"
+    version = "1.0.2"
 
     defaultConfig {
         minSdk = 21
@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -44,18 +43,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-}
-
-publishing {
-    publications {
-        register<MavenPublication>("release") {
-            groupId = "id.nesd"
-            artifactId = "rcache"
-            version = "1.0.0"
-
-            afterEvaluate {
-                from(components["release"])
-            }
-        }
-    }
 }
