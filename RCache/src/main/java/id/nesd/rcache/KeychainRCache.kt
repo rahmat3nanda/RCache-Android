@@ -5,8 +5,9 @@ import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.google.gson.Gson
-import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.reflect.TypeToken
+import id.nesd.rcache.RCacheEncoding.fromBase64
+import id.nesd.rcache.RCacheEncoding.toBase64
 
 class KeychainRCache private constructor(context: Context) : RCaching {
     private val mKey: MasterKey = MasterKey.Builder(context)
@@ -100,7 +101,7 @@ class KeychainRCache private constructor(context: Context) : RCaching {
         val map: Map<String, Any>? = gson.fromJson(s, typeToken)
 
         // Convert LinkedTreeMap and LinkedHashMap to regular Map
-        val convertedMap: Map<String, Any>? = map?.let { convertMap(it) }
+        val convertedMap: Map<String, Any>? = map?.let { RCacheEncoding.convertMap(it) }
 
         // Convert the map to the desired type
         return convertedMap?.mapValues { it.value as T }
@@ -129,25 +130,5 @@ class KeychainRCache private constructor(context: Context) : RCaching {
 
     private fun generate(key: RCache.Key): String {
         return "KeychainCache-${key.rawValue}"
-    }
-
-    // Extension functions for encoding and decoding Base64
-    private fun ByteArray.toBase64(): String {
-        return android.util.Base64.encodeToString(this, android.util.Base64.DEFAULT)
-    }
-
-    private fun String.fromBase64(): ByteArray {
-        return android.util.Base64.decode(this, android.util.Base64.DEFAULT)
-    }
-
-    // Function to recursively convert LinkedTreeMap and LinkedHashMap to regular Map
-    private fun convertMap(map: Map<String, Any>): Map<String, Any> {
-        return map.mapValues { entry ->
-            when (val value = entry.value) {
-                is LinkedTreeMap<*, *> -> convertMap(value as Map<String, Any>)
-                is LinkedHashMap<*, *> -> convertMap(value as Map<String, Any>)
-                else -> value
-            }
-        }
     }
 }

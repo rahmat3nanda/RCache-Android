@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
-import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.reflect.TypeToken
+import id.nesd.rcache.RCacheEncoding.fromBase64
+import id.nesd.rcache.RCacheEncoding.toBase64
 
 class SharedPreferencesRCache private constructor(context: Context) : RCaching {
 
@@ -27,7 +28,7 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
     private val gson: Gson = Gson()
 
     override fun save(byteArray: ByteArray, key: RCache.Key) {
-        prefs.edit { putString(generate(key), byteArray.joinToString(",") { it.toInt().toString() }) }
+        prefs.edit { putString(generate(key), byteArray.toBase64()) }
     }
 
     override fun save(string: String, key: RCache.Key) {
@@ -63,7 +64,8 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
     }
 
     override fun readByteArray(key: RCache.Key): ByteArray? {
-        return prefs.getString(generate(key), null)?.split(",")?.map { it.toByte() }?.toByteArray()
+        val base64 = prefs.getString(generate(key), null) ?: return null
+        return base64.fromBase64()
     }
 
     override fun readString(key: RCache.Key): String? {
@@ -92,7 +94,7 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
         val map: Map<String, Any>? = gson.fromJson(s, typeToken)
 
         // Convert LinkedTreeMap and LinkedHashMap to regular Map
-        val convertedMap: Map<String, Any>? = map?.let { convertMap(it) }
+        val convertedMap: Map<String, Any>? = map?.let { RCacheEncoding.convertMap(it) }
 
         // Convert the map to the desired type
         return convertedMap?.mapValues { it.value as T }
@@ -123,16 +125,5 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
 
     private fun generate(key: RCache.Key): String {
         return "SharedPreferencesRCache-${key.rawValue}"
-    }
-
-    // Function to recursively convert LinkedTreeMap and LinkedHashMap to regular Map
-    private fun convertMap(map: Map<String, Any>): Map<String, Any> {
-        return map.mapValues { entry ->
-            when (val value = entry.value) {
-                is LinkedTreeMap<*, *> -> convertMap(value as Map<String, Any>)
-                is LinkedHashMap<*, *> -> convertMap(value as Map<String, Any>)
-                else -> value
-            }
-        }
     }
 }
