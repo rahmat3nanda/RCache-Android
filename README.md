@@ -34,7 +34,7 @@ unified API for storing data in both `SharedPreferences` and `EncryptedSharedPre
 ```groovy
     dependencies {
     // Others Dependencies
-    implementation 'com.github.rahmat3nanda:RCache-Android:1.0.4'
+    implementation 'com.github.rahmat3nanda:RCache-Android:1.1.0'
 }
 ```
 
@@ -42,8 +42,9 @@ unified API for storing data in both `SharedPreferences` and `EncryptedSharedPre
 
 ```groovy
     dependencies {
-    // Others Dependencies
-    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+   // Others Dependencies
+   implementation("androidx.security:security-crypto:1.1.0-alpha06")
+   implementation("com.google.code.gson:gson:2.10.1")
 }
 ```
 
@@ -152,7 +153,7 @@ AndroidManifest.xml
 import id.nesd.rcache.RCache
 
 // save ByteArray to General Storage
-RCache.common.save(data = emptyArray<Int>(), key = RCache.Key("data"))
+RCache.common.save(byteArray = emptyArray<Int>(), key = RCache.Key("byteArray"))
 
 // save String to General Storage
 RCache.common.save(string = "String", key = RCache.Key("string"))
@@ -167,13 +168,16 @@ RCache.common.save(integer = 101, key = RCache.Key("integer"))
 RCache.common.save(array = listOf(101, "string", true), key = RCache.Key("array"))
 
 // save Map to General Storage
-RCache.common.save(dictionary = mapOf("bool" to true, "integer" to 101), key = RCache.Key("dictionary"))
+RCache.common.save(map = mapOf("bool" to true, "integer" to 101), key = RCache.Key("map"))
 
 // save Double to General Storage
 RCache.common.save(double = 2.0, key = RCache.Key("double"))
 
 // save Float to General Storage
 RCache.common.save(float = 3.01f, key = RCache.Key("float"))
+
+// save data class to General Storage
+RCache.common.save(dataClass = MyDataClass(), key = RCache.Key("dataClass"))
 ```
 
 #### Read Variable from General Storage
@@ -182,7 +186,7 @@ RCache.common.save(float = 3.01f, key = RCache.Key("float"))
 import id.nesd.rcache.RCache
 
 // read ByteArray from General Storage
-RCache.common.readData(key = RCache.Key("data"))
+RCache.common.readByteArray(key = RCache.Key("byteArray"))
 
 // read String from General Storage
 RCache.common.readString(key = RCache.Key("string"))
@@ -197,13 +201,16 @@ RCache.common.readInteger(key = RCache.Key("integer"))
 RCache.common.readArray(key = RCache.Key("array"))
 
 // read Map from General Storage
-RCache.common.readDictionary(key = RCache.Key("dictionary"))
+RCache.common.readMap(key = RCache.Key("map"))
 
 // read Double from General Storage
 RCache.common.readDouble(key = RCache.Key("double"))
 
 // read Float from General Storage
 RCache.common.readFloat(key = RCache.Key("float"))
+
+// read data class from General Storage
+RCache.common.readDataClass(key = RCache.Key("dataClass"), classOfT = MyDataModel::class.java)
 ```
 
 #### Remove Variable from General Storage
@@ -232,7 +239,7 @@ RCache.common.clear()
 import id.nesd.rcache.RCache
 
 // save ByteArray to Credentials Storage
-RCache.credentials.save(data = emptyList<Int>(), key = RCache.Key("data"))
+RCache.credentials.save(byteArray = emptyList<Int>(), key = RCache.Key("byteArray"))
 
 // save String to Credentials Storage
 RCache.credentials.save(string = "String", key = RCache.Key("string"))
@@ -247,13 +254,16 @@ RCache.credentials.save(integer = 101, key = RCache.Key("integer"))
 RCache.credentials.save(array = listOf(101, "string", true), key = RCache.Key("array"))
 
 // save Map to Credentials Storage
-RCache.credentials.save(dictionary = mapOf("bool" to true, "integer" to 101), key = RCache.Key("dictionary"))
+RCache.credentials.save(map = mapOf("bool" to true, "integer" to 101), key = RCache.Key("map"))
 
 // save Double to Credentials Storage
 RCache.credentials.save(double = 2.0, key = RCache.Key("double"))
 
 // save Float to Credentials Storage
 RCache.credentials.save(float = 3.01f, key = RCache.Key("float"))
+
+// save data class to Credentials Storage
+RCache.credentials.save(dataClass = MyDataClass(), key = RCache.Key("dataClass"))
 ```
 
 #### Read Variable from Credentials Storage
@@ -262,7 +272,7 @@ RCache.credentials.save(float = 3.01f, key = RCache.Key("float"))
 import id.nesd.rcache.RCache
 
 // read ByteArray from Credentials Storage
-RCache.credentials.readData(key = RCache.Key("data"))
+RCache.credentials.readByteArray(key = RCache.Key("byteArray"))
 
 // read String from Credentials Storage
 RCache.credentials.readString(key = RCache.Key("string"))
@@ -277,13 +287,16 @@ RCache.credentials.readInteger(key = RCache.Key("integer"))
 RCache.credentials.readArray(key= RCache. Key ("array"))
 
 // read Map from Credentials Storage
-RCache.credentials.readDictionary(key= RCache. Key ("dictionary"))
+RCache.credentials.readMap(key= RCache. Key ("map"))
 
 // read Double from Credentials Storage
 RCache.credentials.readDouble(key= RCache. Key ("double"))
 
 // read Float from Credentials Storage
 RCache.credentials.readFloat(key= RCache. Key ("float"))
+
+// read data class from General Storage
+RCache.common.readDataClass(key = RCache.Key("dataClass"), classOfT = MyDataModel::class.java)
 ```
 
 #### Remove Variable from Credentials Storage
