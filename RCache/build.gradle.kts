@@ -4,11 +4,13 @@ plugins {
     id("maven-publish")
 }
 
+val rCacheVersion = "1.1.0"
+
 android {
     namespace = "id.nesd.rcache"
     compileSdk = 34
 
-    version = "1.0.3"
+    version = rCacheVersion
 
     defaultConfig {
         minSdk = 21
@@ -36,6 +38,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -50,7 +53,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "id.nesd"
             artifactId = "rcache"
-            version = "1.0.3"
+            version = rCacheVersion
 
             afterEvaluate {
                 from(components["release"])
