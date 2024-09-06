@@ -22,8 +22,10 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
         }
     }
 
+    private val identifier: String = context.identifier("SharedPreferencesRCache")
+
     private val prefs: SharedPreferences =
-        context.getSharedPreferences("SharedPreferencesRCache", Context.MODE_PRIVATE)
+        context.getSharedPreferences(identifier, Context.MODE_PRIVATE)
 
     private val gson: Gson = Gson()
 
@@ -124,6 +126,6 @@ class SharedPreferencesRCache private constructor(context: Context) : RCaching {
     }
 
     private fun generate(key: RCache.Key): String {
-        return "SharedPreferencesRCache-${key.rawValue}"
+        return key.stringId(identifier)
     }
 }

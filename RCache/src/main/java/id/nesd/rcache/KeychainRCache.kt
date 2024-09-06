@@ -14,9 +14,11 @@ class KeychainRCache private constructor(context: Context) : RCaching {
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
 
+    private val identifier: String = context.identifier("KeychainRCache")
+
     private val sharedPreferences: SharedPreferences = EncryptedSharedPreferences.create(
         context,
-        "KeychainRCache",
+        identifier,
         mKey,
         EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
@@ -129,6 +131,6 @@ class KeychainRCache private constructor(context: Context) : RCaching {
     }
 
     private fun generate(key: RCache.Key): String {
-        return "KeychainCache-${key.rawValue}"
+        return key.stringId(identifier)
     }
 }
