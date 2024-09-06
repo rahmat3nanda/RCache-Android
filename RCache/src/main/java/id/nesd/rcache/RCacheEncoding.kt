@@ -1,5 +1,6 @@
 package id.nesd.rcache
 
+import android.content.Context
 import com.google.gson.internal.LinkedTreeMap
 
 internal object RCacheEncoding {
@@ -21,4 +22,12 @@ internal object RCacheEncoding {
             }
         }
     }
+}
+
+fun Context.identifier(from: String): String {
+    return "${this.packageName}-$from"
+}
+
+fun RCache.Key.stringId(from: String): String {
+    return "${from}-${rawValue}".replace(" ", "_")
 }
