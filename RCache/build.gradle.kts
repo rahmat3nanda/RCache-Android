@@ -4,7 +4,7 @@ plugins {
     id("maven-publish")
 }
 
-val rCacheVersion = "1.1.0"
+val rCacheVersion = "1.1.1"
 
 android {
     namespace = "id.nesd.rcache"

@@ -34,7 +34,7 @@ unified API for storing data in both `SharedPreferences` and `EncryptedSharedPre
 ```groovy
     dependencies {
     // Others Dependencies
-    implementation 'com.github.rahmat3nanda:RCache-Android:1.1.0'
+    implementation 'com.github.rahmat3nanda:RCache-Android:1.1.1'
 }
 ```
 
